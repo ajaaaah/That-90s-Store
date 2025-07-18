@@ -1,0 +1,8 @@
+# Node modules and env files
+node_modules/
+backend/.env
+frontend/.env
+
+# Logs and system files
+*.log
+.DS_Store
