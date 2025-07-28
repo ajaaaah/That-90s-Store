@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-const { Category } = require('./category'); // Import the Category model
 
 const productSchema = new mongoose.Schema({
     name: { type: String}, 
@@ -9,7 +8,7 @@ const productSchema = new mongoose.Schema({
     description: { type: String},
     price: { type: Number, required: true },
     isFeatured: { type: Boolean, default: false },
-    category: Category
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
 });
 
 // Create a model for the product schema

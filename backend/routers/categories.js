@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const router = express.Router();
 
 const { Category } = require('../models/category');
@@ -27,23 +26,20 @@ router.get(`/:id`, async (req, res) => {
 });
 
 // Add a new category
-router.post(`/`, (req, res) => {
-    const newCategory = new Category({
-        id: req.body.id,
+router.post(`/`, async (req, res) => {
+    let category = new Category({
         name: req.body.name,
         color: req.body.color,
         image: req.body.image
     });
 
-    if(!newCategory){
+    category = await category.save();
+
+    if(!category){
         return res.status(400).json({ success: false, message: 'the category could not be created' });
     }
 
-    if(!newCategory.id || !newCategory.name || !newCategory.color) {
-        return res.status(400).json({ success: false, message: 'Please provide all required fields' });
-    }
-
-    res.send(newCategory);
+    res.send(category);
 });
 
 // Update a category
@@ -67,14 +63,17 @@ router.put(`/:id`, async (req, res) => {
 });
 
 // Delete a category
-router.delete(`/:id`, async (req, res) => {
-    const category = await Category.findByIdAndRemove(req.params.id);
-
-    if (!category) {
-        return res.status(404).json({ success: false, message: 'Category not found' });
-    }
-
-    res.send({ success: true, message: 'Category deleted successfully' });
-});
+router.delete(`/:id`, (req, res) => {
+    Category.findByIdAndDelete(req.params.id).then((category) => {
+        if (category) {
+            return res.status(200).json({ success: true, message: 'Category deleted successfully' });
+        }
+        else {
+            return res.status(404).json({ success: false, message: 'Category not found' });
+        }
+    }).catch((err) => {
+        return res.status(500).json({ success: false, error: err });
+    });
+})
 
 module.exports = router;

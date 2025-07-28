@@ -1,9 +1,9 @@
 const express = require('express');
-const app = express();
 const router = express.Router();
 
 const { Product } = require('../models/product');
 
+//CRUD operations for products
 // Get all products
 app.get(`/`, async (req, res) => {
     const productList = await Product.find()
@@ -34,5 +34,11 @@ app.post(`/`, (req, res) => {
     })
 
 })
+
+// Get a product by ID
+app.get('/:id', async (req, res) => {
+    const product = await Product.findById(req.params.id);
+})
+
 
 module.exports = router;

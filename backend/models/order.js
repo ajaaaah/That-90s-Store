@@ -13,7 +13,7 @@ const orderSchema = new mongoose.Schema({
         country: { type: String, required: true }
     },
     totalPrice: { type: Number, required: true },
-    user: User, // Reference to the User model,
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to the User model,
     dateOrdered: { type: Date, default: Date.now }
 });
 

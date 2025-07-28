@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const router = express.Router();
 
 //Get all orders
@@ -16,10 +15,13 @@ router.get(`/`, async (req, res) => {
 // Get an order by ID
 router.get(`/:id`, async (req, res) => {
     const order = await Order.findById(req.params.id)
-    .populate('user', 'name'); // Populate user details
+    .populate('user', 'name') // Populate user details
     .populate({
-        path: 'orderItems', populate: {
-            path: 'product', populate: 'category'}
+        path: 'orderItems', 
+        populate: {
+            path: 'product', 
+            populate: 'category'
+        }
     });
 
     if (!order) {
@@ -50,3 +52,5 @@ router.post(`/`, (req, res) => {
         res.status(500).json({ error: err, success: false });
     });
 }); 
+
+module.exports = router;

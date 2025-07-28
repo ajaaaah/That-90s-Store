@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     zip: { type: String, required: true },
     country: { type: String, required: true },
     phone: { type: String, required: true },
-    isAdmin: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false }
 });
 
 // Create a model for the user schema

@@ -9,23 +9,26 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const api = process.env.API_URL;
 
+// Import routers
 const productsRouter = require('./routers/products');
+const ordersRouter = require('./routers/orders');
+const categoriesRouter = require('./routers/categories');
+const usersRouter = require('./routers/users');
 
 
 //Middleware
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
 
+
 //Routers
 app.use(`${api}/products`, productsRouter);
-
-//Models
-// Import the Product model from the models directory
-const Product = require('./models/product');
-
+app.use(`${api}/orders`, ordersRouter);
+app.use(`${api}/categories`, categoriesRouter); 
+app.use(`${api}/users`, usersRouter);
 
 
-
+//Database connection
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,  
     useUnifiedTopology: true,
