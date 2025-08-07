@@ -5,7 +5,7 @@ const { User } = require('./user'); // Import the User model
 
 const orderSchema = new mongoose.Schema({
     id: { type: String, required: true },
-    orderItems: [orderItemSchema], // Assuming orderItemSchema is defined elsewhere
+    orderItems: [orderItem], // Assuming orderItemSchema is defined elsewhere
     shippingAddress: {
         street: { type: String, required: true },
         city: { type: String, required: true },

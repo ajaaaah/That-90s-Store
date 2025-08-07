@@ -5,15 +5,24 @@ const { Product } = require('../models/product');
 const { Category } = require('../models/category');
 
 //CRUD operations for products
+router.get(`/`, async (req, res) =>{
+    // for all products, no filter
+    // for specific category, products?category=category1
+    // for multiple categories, products?categories=category1,category2
+    let filter = {};
+    if(req.query.categories){
+        filter = {category: {$in: req.query.categories.split(',')}}
+    } else if(req.query.category) {
+        filter = {category: req.query.category}
+    }
 
-// Get all products
-router.get(`/`, async (req, res) => {
-    const productList = await Product.find()
+    const productList = await Product.find(filter).populate('category');
 
-    if(!productList) { return res.status(500).json({ success: false, message: 'No products found' });}
-
+    if(!productList) {
+        res.status(500).json({success: false})
+    } 
     res.send(productList);
-});
+})
 
 //Get a product by ID
 router.get(`/:id`, async (req, res) => {
@@ -90,6 +99,29 @@ router.delete(`/:id`, (req, res) => {
     }).catch((err) => {
         return res.status(500).json({ success: false, error: err });
     });
+})
+
+//Get count of products
+router.get(`/get/count`, async (req, res) =>{
+    const productCount = await Product.countDocuments((count) => count)
+
+    if(!productCount) {
+        res.status(500).json({success: false})
+    } 
+    res.send({
+        productCount: productCount
+    });
+})
+
+//Get featured products
+router.get(`/get/featured/:count`, async (req, res) =>{
+    const count = req.params.count ? req.params.count : 0
+    const products = await Product.find({isFeatured: true}).limit(+count);
+
+    if(!products) {
+        res.status(500).json({success: false})
+    } 
+    res.send(products);
 })
 
 module.exports = router;
