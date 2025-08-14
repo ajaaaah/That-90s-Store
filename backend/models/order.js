@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
 
-const { orderItems } = require('./orderItem'); // Import the Order item model
-const { User } = require('./user'); // Import the User model
-
 const orderSchema = new mongoose.Schema({
     id: { type: String, required: true },
     orderItems: [orderItem], // Assuming orderItemSchema is defined elsewhere
