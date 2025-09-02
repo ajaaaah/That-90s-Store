@@ -1,0 +1,101 @@
+
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 5em;
+    width:auto;
+    margin-top: 0.5em;
+    position: relative;
+    z-index: 2;
+
+}
+
+.stack-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+.that {
+    color: #ffffff;
+}
+
+.store {
+    color: #fffff0;
+    text-shadow: 8px 8px #682aef,
+                    -4px -4px 0 #000000; /* right and down shadow*/
+
+}
+
+p{
+    color: #555;
+    padding: 10px;
+}
+
+.shape-row {
+    position: absolute;
+  display: flex;
+  gap: 1em;
+  width: 100%;
+  justify-content: center;
+  pointer-events: none; /* shapes won't block text selection */
+}
+
+.rhombus1 {
+  width: 100px;
+  height: 100px;
+  left: 30px;
+  top: 30px;
+  position: relative;
+  background: #1bf1dc;
+  transform: skew(20deg, -30deg);
+  border: 1px solid #000;
+}
+
+.rhombus2 {
+  width: 100px;
+  height: 100px;
+  left: 20px;
+  top: 30px;
+  position: relative;
+  background: #ff42b0;
+  transform: rotate(35deg);
+  border: 1px solid #000;
+}
+
+.rectangle1 {
+  width: 100px;
+  height: 50px;
+  right: 100px;
+  top: 10px;
+  position: relative;
+  background: #fcd823;
+  transform: skew(-20deg, -20deg);
+}
+
+.circle {
+  width: 5px;
+  height: 5px;
+  background-color: #faf5ff;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.3;
+  transform: skew(30deg, 20deg);
+}
+
+.circle-row{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    pointer-events: none; /* circles won't block interaction */
+    z-index: -1;
+}

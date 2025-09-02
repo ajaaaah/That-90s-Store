@@ -1,0 +1,17 @@
+nav{
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
+    background-color: #4f0687;
+    padding: 1rem;
+}
+
+a{
+    color: #ff42b0;
+    text-decoration: wavy underline;
+}
+
+a:hover{
+    text-decoration: wavy underline;
+    color:#20efde;
+}
