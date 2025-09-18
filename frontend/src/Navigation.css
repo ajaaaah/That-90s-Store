@@ -3,7 +3,8 @@ nav{
     justify-content: center;
     gap: 10rem;
     background-color: #4f0687;
-    padding: 1rem;
+    padding: 0.8rem;
+    border: #ff42b0 2px solid;
 }
 
 a{
@@ -14,4 +15,10 @@ a{
 a:hover{
     text-decoration: wavy underline;
     color:#20efde;
+}
+
+nav:hover{
+    background-color: #4f0687;
+    padding: 0.8rem;
+    border: #20efde 2px solid;
 }

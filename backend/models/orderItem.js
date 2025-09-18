@@ -5,4 +5,5 @@ const orderItemSchema = new mongoose.Schema({
     quantity: { type: Number, required: true }
 })
 
+exports.orderItemSchema = orderItemSchema;
 exports.orderItem = mongoose.model('OrderItems', orderItemSchema);

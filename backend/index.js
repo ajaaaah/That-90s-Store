@@ -6,21 +6,34 @@ const morgan = require('morgan');
 // mongoose is used for MongoDB object modeling
 const mongoose = require('mongoose');
 
-require('dotenv').config();
-const api = process.env.API_URL;
-
 // Import routers
 const productsRouter = require('./routers/products');
 const ordersRouter = require('./routers/orders');
 const categoriesRouter = require('./routers/categories');
 const usersRouter = require('./routers/users');
+const cors = require('cors');
 const authenticateJwt = require('./helpers/jwt');
 
+
+// Load environment variables from .env file
+require('dotenv').config();
+const api = process.env.API_URL;
+app.use(cors());
 
 //Middleware
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
-app.use(authenticateJwt);
+app.use(`${api}/orders`, authenticateJwt(), ordersRouter);
+app.use(`${api}/users`, authenticateJwt(), usersRouter);
+// Leave products and categories public for now:
+app.use(`${api}/products`, productsRouter);
+app.use(`${api}/categories`, categoriesRouter);
+app.use((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    return res.status(401).json({ message: 'The user is not authorized' });
+  }
+  return res.status(500).json({ message: err.message });
+});
 
 
 //Routers

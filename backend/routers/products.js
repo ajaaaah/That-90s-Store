@@ -19,7 +19,7 @@ router.get(`/`, async (req, res) =>{
     const productList = await Product.find(filter).populate('category');
 
     if(!productList) {
-        res.status(500).json({success: false})
+        return res.status(500).json({success: false})
     } 
     res.send(productList);
 })
@@ -37,32 +37,35 @@ router.get(`/:id`, async (req, res) => {
 
 // Add a new product
 router.post(`/`, async (req, res) => {
-    const category = Category.findById(req.body.category);
-    if (!category) return res.status(400).send('Invalid category');
+    try {
+        // Validate required fields first
+        if (!req.body.name || !req.body.price || !req.body.category) {
+            return res.status(400).json({ success: false, message: 'Name, price, and category are required' });
+        }
 
-    const newProduct = new Product({
-        name: req.body.name,
-        image: req.body.image,
-        images: req.body.images, // Array of image URLs
-        description: req.body.description,
-        price: req.body.price,
-        isFeatured: req.body.isFeatured,
-        category: req.body.category
-    })
+        const category = await Category.findById(req.body.category);
+        if (!category) return res.status(400).send('Invalid category');
 
-    // Validate required fields
-    if (!req.body.name || !req.body.price || !req.body.category) {
-        return res.status(400).json({ success: false, message: 'Name, price, and category are required' });
+        const newProduct = new Product({
+            name: req.body.name,
+            image: req.body.image,
+            images: req.body.images,
+            description: req.body.description,
+            price: req.body.price,
+            isFeatured: req.body.isFeatured,
+            category: req.body.category
+        });
+
+        const product = await newProduct.save();
+
+        if (!product) {
+            return res.status(500).json({ success: false, message: 'The product could not be created' });
+        }
+        res.status(201).json(product);
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Server error', error: err.message });
     }
-
-    product = await newProduct.save();
-
-    if (!product) {
-        return res.status(500).json({ success: false, message: 'The product could not be created' });
-    }
-    res.status(201).json(product);
-
-})
+});
 
 //Update a product
 router.put(`/:id`, async (req, res) => {
@@ -103,10 +106,10 @@ router.delete(`/:id`, (req, res) => {
 
 //Get count of products
 router.get(`/get/count`, async (req, res) =>{
-    const productCount = await Product.countDocuments((count) => count)
+    const productCount = await Product.countDocuments()
 
     if(!productCount) {
-        res.status(500).json({success: false})
+        return res.status(500).json({success: false})
     } 
     res.send({
         productCount: productCount
@@ -119,7 +122,7 @@ router.get(`/get/featured/:count`, async (req, res) =>{
     const products = await Product.find({isFeatured: true}).limit(+count);
 
     if(!products) {
-        res.status(500).json({success: false})
+        return res.status(500).json({success: false})
     } 
     res.send(products);
 })

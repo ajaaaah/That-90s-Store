@@ -26,7 +26,7 @@ p{
     padding: 0.5rem;
     margin: 0 1rem 1rem 1rem;
     border-radius: 5px;
-    width: 30%;
+    width: 33.33%;
     box-sizing: border-box;
     overflow: hidden;
     display: flex;
@@ -36,7 +36,7 @@ p{
 button{
     background-color: #4f0687;
     color: white;
-    border: none;
+    border-radius: 50%;
     padding: 0.5rem 1rem;
     border-radius: 6px 6px 6px 6px;
     cursor: pointer;
@@ -49,4 +49,20 @@ img{
     object-fit: contain;
     border-radius: 10px;
     background: #fff; 
+}
+
+button::hover{
+    background-color: #4f0687;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px 6px 6px 6px;
+    cursor: pointer;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column.side, .column.middle {
+    width: 100%;
+  }
 }

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-
+//Link to photo gallery : https://postimg.cc/gallery/X5wyJdQ
 const productSchema = new mongoose.Schema({
     name: { type: String}, 
     image: { type: String},

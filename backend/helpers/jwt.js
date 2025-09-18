@@ -1,6 +1,6 @@
 //Protects our server so that only authenticated users can access certain routes & can not acess without a valid JWT token
 
-const expressJwt = require('express-jwt');
+const {expressjwt : expressJwt } = require('express-jwt');
 
 function authenticateJwt() {
     const secret = process.env.JWT_SECRET;

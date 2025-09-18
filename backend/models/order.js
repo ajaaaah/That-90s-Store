@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const { orderItemSchema } = require('./orderItem');
 
 const orderSchema = new mongoose.Schema({
     id: { type: String, required: true },
-    orderItems: [orderItem], // Assuming orderItemSchema is defined elsewhere
+    orderItems: [orderItemSchema], // Using the orderItemSchema here & not orderItem model. MongoDB expects a schema
     shippingAddress: {
         street: { type: String, required: true },
         city: { type: String, required: true },
@@ -16,4 +17,4 @@ const orderSchema = new mongoose.Schema({
 
 // Create a model for the order schema
 // This model will be used to interact with the orders collection in MongoDB
-exports.Order = mongoose.model('Order', ordersSchema);
+exports.Order = mongoose.model('Order', orderSchema);

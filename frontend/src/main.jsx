@@ -1,17 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-//import './index.css'
+import { Outlet } from 'react-router-dom'
 
-import Heading from './Heading.jsx'
-import Footer from './Footer.jsx'
-import Navigation from './Navigation.jsx'
-import Content from './Content.jsx'
+import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Heading />
-    <Navigation />
-    <Content />
-    <Footer />
+    <App />
   </StrictMode>,
 )
